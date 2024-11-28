@@ -1,4 +1,3 @@
-import chessSocket from "../../../backend/sockets/chessSocket";
 import ShobuPiece from "./ShobuPiece";
 export default class Shobu{
     constructor(playerColor) {
