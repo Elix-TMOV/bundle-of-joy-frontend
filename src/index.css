@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .back-drop-button {
+        box-shadow: -8px 8px 0px #de7276;
+        transition: transform .2s ease-out, box-shadow .2s ease-out;
+    }
+    .back-drop-button:hover {
+        box-shadow: 0px 0px 0px #de7276;
+        transform: translateX(-8px);
+    }
+    .back-drop-card {
+        box-shadow: -10px 10px 0px #72acde;
+        transition: transform .2s ease-out, box-shadow .2s ease-out;
+    }
+    .back-drop-card:hover {
+        box-shadow: 0px 0px 0px #72acde;
+        transform: translateX(-10px);
+    }
+    .icon {
+        @apply flex items-center justify-center rounded-full flex-shrink-0;
+    }
+    .ghost {
+        @apply bg-[#c3e3ff];
+    }
+    .ghost:hover {
+        @apply bg-[#9ed2ff];
+    }
+    .dynamic-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+    .button-font {
+        @apply font-bold text-xl text-[#243151];
+    }
+}
+
+@layer base {
+    ::-webkit-scrollbar {
+        background-color: #aed5f8;
+        width: 10px;
+        border-radius: 2px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #83c2f9;
+        border-radius: 2px;
+    }
+    #root {
+        font-family: 'Montserrat', sans-serif;
+    }
+}

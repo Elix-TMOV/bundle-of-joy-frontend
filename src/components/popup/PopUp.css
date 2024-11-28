@@ -1,0 +1,16 @@
+.popup {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.popup-contants {
+    width: 13.5%;
+    height: 50.5%;
+    background-color:  rgb(211, 201, 183);
+    position: absolute;
+    border: 8px solid  rgb(211, 201, 183);
+    box-shadow: 0 0 0 5px rgb(164, 116, 73);
+}
