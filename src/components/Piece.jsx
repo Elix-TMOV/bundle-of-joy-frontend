@@ -10,20 +10,18 @@ export default function Piece(props) {
         pieceNameRef.current = pieceName;
     }, [pieceName]);
 
-    const [{ isDragging }, drag, preview] = useDrag(() => {
-        return ({
-            type: 'piece',
-            canDrag: () => {
-                return canDragPiece(pieceNameRef.current.split("_")[0], pieceF, pieceR);
-            },
-            item: () => {
-                return { type: 'piece', id: pieceNameRef.current, pieceR: pieceR, pieceF: pieceF };
-            },
-            collect: (monitor) => ({
-                isDragging: monitor.isDragging(),
-            }),
-        });
-    });
+    const [{ isDragging }, drag, preview] = useDrag(() => ({
+        type: 'piece',
+        canDrag: () => {
+            return canDragPiece(pieceNameRef.current.split("_")[0], pieceF, pieceR);
+        },
+        item: () => {
+            return { type: 'piece', id: pieceNameRef.current, pieceR: pieceR, pieceF: pieceF };
+        },
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging(),
+        }),
+    }));
 
     return (
         <>
@@ -34,11 +32,14 @@ export default function Piece(props) {
                 style={{
                     backgroundImage: `url(${pieceImage})`,
                     opacity: isDragging ? 0 : 1,
-                    width: '100px',
-                    height: '100px',
+                    width: '100%',
+                    height: '0',
+                    paddingBottom: '100%',
+                    position: 'relative',
                     backgroundSize: 'contain',
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center',
+                    cursor: 'grab'
                 }}
             />
         </>

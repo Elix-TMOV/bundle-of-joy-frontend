@@ -28,7 +28,7 @@ export default function ShobuBoard(props){
     const socket = useContext(SocketContext)
     const { currentUser } = useContext(AuthContext);
     const { updateTurn } = useTurn();
-
+    const moveSound = new Audio("/assets/piece.mp3");
     const renderMovedPiece = (prePieces) => {
         const newPieces = prePieces != null ? prePieces : shobu.current.getPieces()
         socket.emit('set-game-state', JSON.stringify({
@@ -56,6 +56,7 @@ export default function ShobuBoard(props){
         shobu.current.movePiece(piece.pieceR, piece.pieceF, tileRank, tileFile)
         socket.emit("pieceDropped", piece.pieceR, piece.pieceF, tileRank, tileFile, roomSocketId)
         renderMovedPiece()
+        moveSound.play();
         checkGameOver()
     }
 
@@ -106,6 +107,7 @@ export default function ShobuBoard(props){
         
             shobu.current.movePiece(frmR, frmF, toR, toF, roomSocketId);
             renderMovedPiece()
+            moveSound.play();
             checkGameOver()
         })
 

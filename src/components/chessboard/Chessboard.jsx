@@ -30,6 +30,7 @@ export default function Chessboard(props) {
     const board = []
     const socket = useContext(SocketContext)
     const { updateTurn } = useTurn();
+    const moveSound = new Audio("/assets/piece.mp3");
     
     const renderMovedPiece = (prePieces) => {
         
@@ -57,6 +58,7 @@ export default function Chessboard(props) {
 
     useEffect(() => {
         const handleOpponentDrop = (data) => {
+            moveSound.play();
             
             const { piece, tileFile, tileRank } = data;
             chess.current.movePiece(piece.pieceR, piece.pieceF, tileRank, tileFile)
@@ -160,7 +162,8 @@ export default function Chessboard(props) {
     
 
     const onDrop = (piece, tileFile, tileRank) => {
-     
+        moveSound.play();
+        
         const pieceData = {
             pieceR: piece.pieceR,
             pieceF: piece.pieceF,
@@ -219,7 +222,12 @@ export default function Chessboard(props) {
     return (
         <div className="flex h-[100%] bg-red-300 items-center justify-center">
             <DndProvider backend={isDesktop ? HTML5Backend : TouchBackend}>
-                    <div className="relative grid grid-cols-8 grid-rows-8 h-[100%]">
+                    <div className="relative grid grid-cols-8 grid-rows-8 aspect-square"
+                    style={{ 
+                        height: '100%',
+                        maxHeight: '100%'
+                    }}
+                    >
                         {popUp &&
                             <PopUp
                                 contants = {result == null ? <Promotions onClick={selectPromotion} promotionPawn={promotionPawn}/>: <GameOverModal result={result} />}

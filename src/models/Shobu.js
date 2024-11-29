@@ -94,6 +94,7 @@ export default class Shobu{
         let piecesOnBoard2 = {'w': 0, 'b': 0};
         let piecesOnBoard3 = {'w': 0, 'b': 0};
         let piecesOnBoard4 = {'w': 0, 'b': 0};
+        
         // Loop through all pieces
         for (let piece of this.pieces.filter(piece => piece.rank != null)) {
             switch (piece.board) {
@@ -111,8 +112,9 @@ export default class Shobu{
                     break;
             }
         }
-        // Check if any board has a count of 0 for either 'w' or 'b'
-        const boards = [piecesOnBoard1, piecesOnBoard3];
+        
+        // Check all boards for win condition
+        const boards = [piecesOnBoard1, piecesOnBoard2, piecesOnBoard3, piecesOnBoard4];
         for (let board of boards) {
             if (board['w'] === 0) {
                 return {message: "Black Won", isOver: true};
@@ -121,6 +123,7 @@ export default class Shobu{
                 return {message: "White Won", isOver: true};
             }
         }
+        
         return {message: "", isOver: false}; // Game is not over if all boards have both 'w' and 'b' pieces
     }
 
@@ -179,6 +182,7 @@ export default class Shobu{
                 if (tileStatus.color == piece.color) {
                     continue;
                 } else if (tileStatus.occupied) {
+                    // this code will run when the tile where the piece will land is occupied
                     let aheadF = directionF == 0 ? newF : newF + (1 * directionF / Math.abs(directionF));
                     let aheadR = directionR == 0 ? newR : newR + (1 * directionR / Math.abs(directionR));
 
@@ -190,8 +194,8 @@ export default class Shobu{
                         let behindF = directionF == 0 ? newF : newF - (1 * directionF / Math.abs(directionF));
                         let behindR = directionR == 0 ? newR : newR - (1 * directionR / Math.abs(directionR));
                         let tileBehindStatus = this.isTileOcuupied(behindF, behindR);
-
-                        if (tileBehindStatus.occupied && tileBehindStatus.color == piece.color) {
+                        // if the tile where the person will land is occupied and the tile behind os also occupied regarless of what color the move can't be made
+                        if (tileBehindStatus.occupied) {
                             continue;
                         }
                     }
@@ -239,7 +243,6 @@ export default class Shobu{
                         let aheadF = newF + (1 * directionF)
                         let aheadR = newR + (1 * directionR)
                         let isWithinBoard = this.isWithinBoard(aheadF, aheadR, newF, newR)
-                        // let checkingInOtherBoard = (newR > 3 && aheadR <= 3) || (newF > 3 && aheadF <= 3) || (newR <= 3 && aheadR > 3) || (newF <= 3 && aheadF > 3)
 
                         if (isWithinBoard) {
                             let tileAheadStatus = this.isTileOcuupied(aheadF, aheadR)
@@ -251,10 +254,8 @@ export default class Shobu{
                                 
                                 // Only allow the move if:
                                 // 1. The space ahead is empty AND
-                                // 2. The piece behind is either non-existent or of opposite color
-                                // 3. The piece being pushed is of opposite color
-                                if (!tileAheadStatus.occupied && 
-                                    (!tileBehindStatus.occupied || tileBehindStatus.color != piece.color)) {
+                                // 2. The tile behind is empty (for two-unit moves)
+                                if (!tileAheadStatus.occupied && !tileBehindStatus.occupied) {
                                     piece.possibleMoves.push([newF, newR])
                                 }
                             } else {
@@ -266,8 +267,7 @@ export default class Shobu{
                         else {
                             // wheather the color is same or not is already being checked above 
                             piece.possibleMoves.push([newF, newR])
-                        }
-                        
+                        }                
                     }
                 } else {
                     // If the tile is not occupied, simply add the move in case of one unit move

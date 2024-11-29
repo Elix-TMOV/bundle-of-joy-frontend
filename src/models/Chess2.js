@@ -101,13 +101,13 @@ export default class Chess {
         }
 
         let opponentColor = pieceMoved.color == "b" ? 'w' : 'b'
-        let opponentPieces = this.pieces.filter(piece => piece.name.color == opponentColor)
+        let opponentPieces = this.pieces.filter(piece => piece.color == opponentColor)
         for (var i = 0; i < opponentPieces.length; i++) {
             let piece = opponentPieces[i]
             let name = piece.name.split('_')[1]
             let pieceColor = piece.color
-            // let frmF = parseInt(piece.file) 
-            // let frmR = parseInt(piece.rank)
+            let pieceFile = parseInt(piece.file)
+            let pieceRank = parseInt(piece.rank)
             let directions;
             if (name == 'knight') {
                 directions = [[2, 1], [2, -1], [1, 2], [1, -2], [-2, -1], [-2, 1], [-1, -2], [-1, 2]]
@@ -131,8 +131,8 @@ export default class Chess {
                 let toCheck = name == 'pawn' ? 1 : 7
                 for (var j = 1; j <= toCheck; j++) {
                     let progression = (name == 'knight' || name == 'pawn' || name == 'king') ? 1 : j
-                    let newF = frmF + progression * directionF
-                    let newR = frmR + progression * directionR
+                    let newF = pieceFile + progression * directionF
+                    let newR = pieceRank + progression * directionR
                     if (newF >= 1 && newF <= 8 && newR >= 1 && newR <= 8) {
                         const tileStatus = this.isTileOcuupied(newF, newR)
                         if (tileStatus.occupied && tileStatus.color != pieceColor && tileStatus.name == 'king') {

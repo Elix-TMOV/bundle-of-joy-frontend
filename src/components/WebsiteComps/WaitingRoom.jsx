@@ -184,7 +184,7 @@ export default function WaitingRoom(){
                 <div className="flex items-center justify-between">
                     <PlayersList players={players}/>
                 </div>
-                <div className="bg-primary-blue rounded-lg aspect-square relative">
+                <div className="bg-primary-blue rounded-lg aspect-square relative game-window">
                     {
                         startGame ? gameComponent : <SetupComponent roomSocketId={roomSocketId} handleStart={handleStart} gameName={gameName} isHost={currentUser.id == players[0]._id} canStart = {players.length == requiredParticipants}/>
                     }

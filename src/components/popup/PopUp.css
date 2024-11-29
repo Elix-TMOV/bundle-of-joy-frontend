@@ -7,10 +7,11 @@
 }
 
 .popup-contants {
-    width: 13.5%;
-    height: 50.5%;
+    width: 50.5%;
+    height: 25.5%;
     background-color:  rgb(211, 201, 183);
     position: absolute;
     border: 8px solid  rgb(211, 201, 183);
     box-shadow: 0 0 0 5px rgb(164, 116, 73);
+    z-index: 1000;
 }
