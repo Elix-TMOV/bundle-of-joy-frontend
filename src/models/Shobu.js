@@ -200,14 +200,26 @@ export default class Shobu{
                         }
                     }
                 } else {
-                    // might have a problem here
                     if (Math.abs(directionF) == 2 || Math.abs(directionR) == 2) {
                         let behindF = directionF == 0 ? newF : newF - (1 * directionF / Math.abs(directionF));
                         let behindR = directionR == 0 ? newR : newR - (1 * directionR / Math.abs(directionR));
                         let tileBehindStatus = this.isTileOcuupied(behindF, behindR);
 
-                        if (tileBehindStatus.occupied && tileBehindStatus.color == piece.color) {
-                            continue;
+                        if (tileBehindStatus.occupied) {
+                           
+                            if (tileBehindStatus.color == piece.color) {
+                                continue;
+                            }
+                            else {
+                               
+                                let aheadF = directionF == 0 ? newF : newF + (1 * directionF / Math.abs(directionF));
+                                let aheadR = directionR == 0 ? newR : newR + (1 * directionR / Math.abs(directionR));
+                                let tileAheadStatus = this.isTileOcuupied(aheadF, aheadR)
+
+                                if (this.isWithinBoard(aheadF, aheadR, newF, newR) && tileAheadStatus.occupied) {
+                                    continue;
+                                }
+                            }
                         }
                     }
                 }
@@ -258,10 +270,6 @@ export default class Shobu{
                                 // 2. The tile behind is empty (for two-unit moves)
                                 
                                 if (!tileAheadStatus.occupied && !tileBehindStatus.occupied) {
-                                    if (piece.file == 0 && piece.rank == 4){
-                                        
-                                        console.log('okay this move was pusheb', newF, newR)
-                                    }
                                     piece.possibleMoves.push([newF, newR])
                                 }
                             } else {
@@ -271,6 +279,7 @@ export default class Shobu{
                             }
                         }
                         else {
+                            // if the ahead is not withing the board then there is nothing to check for just add the move
                             // wheather the color is same or not is already being checked above 
                             piece.possibleMoves.push([newF, newR])
                         }                
@@ -281,15 +290,28 @@ export default class Shobu{
                     if (Math.abs(movedF) == 2 || Math.abs(movedR) == 2) {
                         let behindF = newF - (1 * directionF);
                         let behindR = newR - (1 * directionR);
-                        let tileBehindStatus = this.isTileOcuupied(behindF, behindR);
-                        if (piece.file == 0 && piece.rank == 4){
-                            console.log('okay got the real problem here')
-                            console.log(tileBehindStatus)
+                        let aheadF = newF + (1 * directionF)
+                        let aheadR = newR + (1 * directionR)
+                        let tileBehindStatus = this.isTileOcuupied(behindF, behindR)
+                        let isWithinBoard = this.isWithinBoard(aheadF, aheadR, newF, newR)
+                        let tileAheadStatus = this.isTileOcuupied(aheadF, aheadR)
+
+                        // if behind is occupied and ahead is occupied the can't make the move
+                        // of behind is occupied by a piece of different color and ahead is empty then can make the
+                        if (isWithinBoard) {
+                            if (!tileBehindStatus.occupied) {
+                                piece.possibleMoves.push([newF, newR]);
+                            }
+                            else if (tileBehindStatus.color != piece.color && !tileAheadStatus.occupied) {
+                                piece.possibleMoves.push([newF, newR]);
+                            }
                         }
-    
-                        if (!tileBehindStatus.occupied) {
-                            piece.possibleMoves.push([newF, newR]);
+                        else {
+                            if (!tileBehindStatus.occupied || tileBehindStatus.color != piece.color) {
+                                piece.possibleMoves.push([newF, newR]);
+                            }
                         }
+
                     } else {
                         piece.possibleMoves.push([newF, newR]);
                     }
