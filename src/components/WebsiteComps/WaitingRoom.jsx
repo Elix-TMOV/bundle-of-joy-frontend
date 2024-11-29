@@ -61,7 +61,7 @@ export default function WaitingRoom(){
                 break;
             }
             case 'Fake-Artist': {
-                setRequiredParticipants(5)
+                setRequiredParticipants(2)
                 setGameComponent(<FakeArtistBoard roomSocketId={roomSocketId}/>)
                 break
             }

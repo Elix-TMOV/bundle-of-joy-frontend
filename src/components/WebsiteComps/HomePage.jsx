@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 
 const Games = [
     {name: "Chess", requiredPlayers: 2, poster: "/assets/Chess-Poster.png", turns: ['w', 'b']},
-    {name: "Fake-Artist", requiredPlayers: 5, poster: "/assets/Fake-Artist-Poster.png", turns: ['red', 'green', 'yellow', 'blue']},
+    {name: "Fake-Artist", requiredPlayers: 5, poster: "/assets/Fake-Artist-Poster.png", turns: ['yellow', 'green', 'red', 'blue', 'purple']},
     {name: "Shobu", requiredPlayers: 2, poster: "/assets/Shobu-Poster.png", turns: ['w', 'b']}
 ];
 

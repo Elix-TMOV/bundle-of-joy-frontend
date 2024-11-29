@@ -186,7 +186,7 @@ export default class Shobu{
                     let aheadF = directionF == 0 ? newF : newF + (1 * directionF / Math.abs(directionF));
                     let aheadR = directionR == 0 ? newR : newR + (1 * directionR / Math.abs(directionR));
 
-                    if (!this.isWithinBoard(aheadF, aheadR, newF, newR) || this.isTileOcuupied(aheadF, aheadR).occupied) {
+                    if (this.isTileOcuupied(aheadF, aheadR).occupied) {
                         continue;
                     }
 
@@ -255,7 +255,12 @@ export default class Shobu{
                                 // Only allow the move if:
                                 // 1. The space ahead is empty AND
                                 // 2. The tile behind is empty (for two-unit moves)
+                                
                                 if (!tileAheadStatus.occupied && !tileBehindStatus.occupied) {
+                                    if (piece.file == 0 && piece.rank == 4){
+                                        
+                                        console.log('okay this move was pusheb', newF, newR)
+                                    }
                                     piece.possibleMoves.push([newF, newR])
                                 }
                             } else {
@@ -276,8 +281,12 @@ export default class Shobu{
                         let behindF = newF - (1 * directionF);
                         let behindR = newR - (1 * directionR);
                         let tileBehindStatus = this.isTileOcuupied(behindF, behindR);
+                        if (piece.file == 0 && piece.rank == 4){
+                            console.log('okay got the real problem here')
+                            console.log(tileBehindStatus)
+                        }
     
-                        if (!tileBehindStatus.occupied || tileBehindStatus.color != piece.color) {
+                        if (!tileBehindStatus.occupied) {
                             piece.possibleMoves.push([newF, newR]);
                         }
                     } else {

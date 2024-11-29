@@ -161,6 +161,14 @@ export default function FakeArtistBoard(props) {
         }
     }, [canvasResize, setUpComplete.current])
 
+    const colorClasses = {
+        'yellow': 'bg-yellow-500',
+        'red': 'bg-red-500',
+        'green': 'bg-green-500',
+        'blue': 'bg-blue-500',
+        'purple': 'bg-purple-500'
+    };
+
     return (
         gameState && 
         <div className={`grid ${startVote ? "grid-rows-[10%_60%_30%]" : "grid-rows-[10%_90%]"} items-center h-full`}> 
@@ -206,12 +214,15 @@ export default function FakeArtistBoard(props) {
                     <div className="grid grid-cols-[repeat(5,minmax(0,auto))] grid-rows-[repeat(2,minmax(0,50px))] gap-4 h-full w-full justify-center">
                         {   (!hasVoted && !result) &&
                             Object.keys(gameState.turnsAndPlayers).map(player => {
-                                return <button className={`bg-${gameState.turnsAndPlayers[player].turn}-500 rounded-md px-2 py-1 items-center justify-center flex`} onClick={() => handleVote(gameState.turnsAndPlayers[player].turn)}>{gameState.turnsAndPlayers[player].username}</button>
+                                return (<button key={player} className={`${colorClasses[gameState.turnsAndPlayers[player].turn]} rounded-md px-2 py-1 items-center justify-center flex`} 
+                                        onClick={() => handleVote(gameState.turnsAndPlayers[player].turn)}>
+                                            {gameState.turnsAndPlayers[player].username}
+                                        </button>)
                             })
                         }
                         {   result &&
                             Object.keys(gameState.turnsAndPlayers).map(player => {
-                                return <div className={`bg-${gameState.turnsAndPlayers[player].turn}-500 rounded-md px-2 py-1 items-center justify-center flex`}>{gameState.turnsAndPlayers[player].username} - {player == gameState.fake ? "Fake" : "Artist"}</div>
+                                return <div key={player} className={`${colorClasses[gameState.turnsAndPlayers[player].turn]} rounded-md px-2 py-1 items-center justify-center flex`}>{gameState.turnsAndPlayers[player].username} - {player == gameState.fake ? "Fake" : "Artist"}</div>
                             })    
                         }
                     </div>            
