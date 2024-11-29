@@ -200,6 +200,7 @@ export default class Shobu{
                         }
                     }
                 } else {
+                    // might have a problem here
                     if (Math.abs(directionF) == 2 || Math.abs(directionR) == 2) {
                         let behindF = directionF == 0 ? newF : newF - (1 * directionF / Math.abs(directionF));
                         let behindR = directionR == 0 ? newR : newR - (1 * directionR / Math.abs(directionR));
